@@ -1,29 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { Lunar, LunarUtil } from 'lunar-typescript';
-const lunar = Lunar.fromDate(new Date(2024, 5, 29, 8, 0, 0));
-console.log(new Date(2024, 5, 29, 8, 0, 0));
-// console.log(lunar.getDayYi());
-// console.log(lunar.getDayJi());
-
-// console.log(lunar.getTimeYi());
-// console.log(lunar.getTimeJi());
-
-
-console.log('================');
-
-// 获取当天时辰列表
-var times = lunar.getTimes();
-for (var i = 0, j = times.length; i < j; i++) {
-  var time = times[i];
-  console.log(time.getMinHm() + ' - ' + time.getMaxHm() + ' : ' + time.getGanZhi());
-  const yi = LunarUtil.getTimeYi(lunar.getDayGanExact() + lunar.getDayZhiExact(), time.getGanZhi())
-  const ji = LunarUtil.getTimeJi(lunar.getDayGanExact() + lunar.getDayZhiExact(), time.getGanZhi())
-  console.log({
-    yi,
-    ji
-  })
-}
-
+import { conversation } from 'src/http/ai';
 
 @Injectable()
 export class LunarService {
@@ -41,6 +18,16 @@ export class LunarService {
     return {
       code: 200,
       data: { ...ret }
+    };
+  }
+
+  async getAiFortune(query: string, conversation_id?: string): Promise<object> {
+    const ret = await conversation(query, conversation_id);
+    const { data } = ret;
+    // 代码省略
+    return {
+      code: 200,
+      data: { data }
     };
   }
 }

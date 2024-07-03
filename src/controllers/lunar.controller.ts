@@ -16,4 +16,15 @@ export class LunarController {
     const date = new Date(query.date);
     return this.lunarService.getDayInfo(date);
   }
+
+  @Post('lunar/Fortune')
+  getFortuneInfo(@Body() body: any): Object {
+    const { date, gender } = body;
+    const query = `根据文件中的数据，统计这几所学校小学生有多少`;
+    
+
+
+
+    return this.lunarService.getAiFortune();
+  }
 }
