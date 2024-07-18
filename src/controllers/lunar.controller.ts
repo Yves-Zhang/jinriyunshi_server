@@ -25,6 +25,6 @@ export class LunarController {
 
 
 
-    return this.lunarService.getAiFortune();
+    return this.lunarService.getAiFortune(query);
   }
 }
